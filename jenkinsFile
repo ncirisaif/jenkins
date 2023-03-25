@@ -1,0 +1,13 @@
+pipeline{
+
+    agent any
+    stages{
+
+        stage('git Checkout'){
+            steps{
+                git 'https://github.com/ncirisaif/jenkins.git'
+            }
+        }
+    }
+
+}
