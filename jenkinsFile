@@ -8,6 +8,12 @@ pipeline{
                 git branch: 'master', url: 'https://github.com/ncirisaif/jenkins.git'
             }
         }
+                stage('Unit test'){
+                    steps{
+                        sh 'mvn test'
+                    }
+                }
+
     }
 
 }
