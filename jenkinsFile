@@ -64,7 +64,18 @@ pipeline{
                     }
                 }
 
+                      stage('Push docker image to docker hub'){
+                    steps{
+                    script{
+                    withCredentials([string(credentialsId: 'jenkins-sonar', variable: 'docker_hub')]) {
+                        sh 'docker login -u ncirisaif -p ${docker_hub}'
+                        sh 'docker image push ncirisaif/$JOB_NAME:v1.$BUILD_ID'
+                        sh 'docker image push ncirisaif/$JOB_NAME:latest'
 
+                    }
+                        }
+                    }
+                }
     }
 
 }
