@@ -47,29 +47,32 @@ pipeline{
 
 
                     stage('Build docker image'){
-//                            dockerImage = docker.build("ncirisaif/my-react-app:latest")
+                           dockerImage = docker.build("ncirisaif/my-react-app:latest")
 
-                    steps{
-                    sh 'docker image build -t $JOB_NAME:v1.$BUILD_ID .'
-                    sh 'docker image tag $JOB_NAME:v1.$BUILD_ID ncirisaif/$JOB_NAME:v1.$BUILD_ID'
-                    sh 'docker image tag $JOB_NAME:v1.$BUILD_ID ncirisaif/$JOB_NAME:latest'
-
-
-
-                    }
+//                     steps{
+//                     sh 'docker image build -t $JOB_NAME:v1.$BUILD_ID .'
+//                     sh 'docker image tag $JOB_NAME:v1.$BUILD_ID ncirisaif/$JOB_NAME:v1.$BUILD_ID'
+//                     sh 'docker image tag $JOB_NAME:v1.$BUILD_ID ncirisaif/$JOB_NAME:latest'
+//
+//
+//
+//                     }
                 }
 
                       stage('Push docker image to docker hub'){
-                    steps{
-                    script{
-                    withCredentials([string(credentialsId: 'jenkins-sonar', variable: 'docker_hub')]) {
-                        sh 'docker login -u ncirisaif -p 170071991'
-                        sh 'docker image push ncirisaif/$JOB_NAME:v1.$BUILD_ID'
-                        sh 'docker image push ncirisaif/$JOB_NAME:latest'
+                              withDockerRegistry([ credentialsId: "dockerhub", url: "" ]) {
+                              dockerImage.push()
 
-                    }
-                        }
-                    }
+//                     steps{
+//                     script{
+//                     withCredentials([string(credentialsId: 'jenkins-sonar', variable: 'docker_hub')]) {
+//                         sh 'docker login -u ncirisaif -p 170071991'
+//                         sh 'docker image push ncirisaif/$JOB_NAME:v1.$BUILD_ID'
+//                         sh 'docker image push ncirisaif/$JOB_NAME:latest'
+//
+//                     }
+//                         }
+//                     }
                 }
     }
 
