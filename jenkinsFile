@@ -31,7 +31,7 @@ pipeline{
                                 }
                     stage('Static code analysis'){
                     steps{
-                    withSonarQubeEnv(installationName: 'jenkins-sonar') {
+                    withSonarQubeEnv(credentialsId: 'jenkins-sonar') {
                        sh 'mvn clean package sonar:sonar'
                     }
                     }
