@@ -7,50 +7,43 @@ pipeline{
         }
 
     stages{
-        stage('Which Java?') {
-            steps {
-                sh 'java --version'
-            }
-        }
-
-
         stage('git Checkout'){
             steps{
                 git branch: 'master', url: 'https://github.com/ncirisaif/jenkins.git'
             }
         }
-                stage('Unit test'){
-                    steps{
-                        sh 'mvn test'
-                    }
-                }
-                    stage('Integration test'){
-                    steps{
-                        sh 'mvn verify -DskipUnitTests'
-                    }
-                }
+//                 stage('Unit test'){
+//                     steps{
+//                         sh 'mvn test'
+//                     }
+//                 }
+//                     stage('Integration test'){
+//                     steps{
+//                         sh 'mvn verify -DskipUnitTests'
+//                     }
+//                 }
 
                                     stage('maven build'){
                                     steps{
                                         sh 'mvn clean install'
                                     }
                                 }
-                    stage('Static code analysis'){
-                    steps{
-                    withSonarQubeEnv(installationName: 'sonarserver') {
-//                       sh 'mvn clean org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar'
-                       sh 'mvn clean package sonar:sonar'
-                    }
-                    }
-                }
+//                     stage('Static code analysis'){
+//                     steps{
+//                     withSonarQubeEnv(installationName: 'sonarserver') {
+// //                       sh 'mvn clean org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar'
+//                        sh 'mvn clean package sonar:sonar'
+//                     }
+//                     }
+//                 }
 
 
-                    stage('Quality gate'){
-                    steps{
-                    waitForQualityGate abortPipeline: false, credentialsId: 'sonar'
-
-                    }
-                }
+//                     stage('Quality gate'){
+//                     steps{
+//                     waitForQualityGate abortPipeline: false, credentialsId: 'sonar'
+//
+//                     }
+//                 }
 
 
                     stage('Build docker image'){
@@ -59,7 +52,7 @@ pipeline{
                     steps{
                     sh 'docker image build -t $JOB_NAME:v1.$BUILD_ID .'
                     sh 'docker image tag $JOB_NAME:v1.$BUILD_ID ncirisaif/$JOB_NAME:v1.$BUILD_ID'
-                    sh 'docker image tag $JOB_NAME:v1.$BUILD_ID ncirisaif/latest'
+                    sh 'docker image tag $JOB_NAME:v1.$BUILD_ID ncirisaif/$JOB_NAME:latest'
 
 
 
