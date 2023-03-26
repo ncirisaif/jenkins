@@ -7,13 +7,12 @@ pipeline{
         }
 
     stages{
-stages {
         stage('Which Java?') {
             steps {
                 sh 'java --version'
             }
         }
-    }
+
 
         stage('git Checkout'){
             steps{
