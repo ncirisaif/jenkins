@@ -15,6 +15,14 @@
 	<description>Demo project for Spring Boot</description>
 	<properties>
 		<java.version>17</java.version>
+		<!-- Sonar Properties -->
+		<sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
+		<sonar.exclusions>
+			**/test/*,
+			**/model/**,
+			**/MainApplicationFile.java,
+			**/config/**
+		</sonar.exclusions>
 	</properties>
 	<dependencies>
 <!--		<dependency>-->
