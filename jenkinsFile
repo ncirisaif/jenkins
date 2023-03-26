@@ -62,7 +62,7 @@ pipeline{
                       stage('Push docker image to docker hub'){
                               withDockerRegistry([ credentialsId: "dockerhub", url: "" ]) {
                               dockerImage.push()
-
+}
 //                     steps{
 //                     script{
 //                     withCredentials([string(credentialsId: 'jenkins-sonar', variable: 'docker_hub')]) {
