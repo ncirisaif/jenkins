@@ -38,6 +38,15 @@ pipeline{
                     }
                 }
 
+
+                    stage('Quality gate'){
+                    steps{
+                    waitForQualityGate abortPipeline: false, credentialsId: 'sonar'
+
+                    }
+                }
+
+
     }
 
 }
