@@ -23,6 +23,20 @@ pipeline{
                         sh 'mvn verify -DskipUnitTests'
                     }
                 }
+
+                                    stage('maven build'){
+                                    steps{
+                                        sh 'mvn clean install'
+                                    }
+                                }
+                    stage('Static code analysis'){
+                    steps{
+                    withSonarQubeEnv(installationName: 'jenkins-sonar') {
+                       sh 'mvn clean package sonar:sonar'
+                    }
+                    }
+                }
+
     }
 
 }
