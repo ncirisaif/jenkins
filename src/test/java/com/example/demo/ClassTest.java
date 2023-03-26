@@ -82,7 +82,7 @@ class ClassTest {
         var finished = new AtomicBoolean();
         var letters = Flux//
                           .just("A", "B", "C").transform(
-                        stringFlux -> stringFlux.doFinally(signal -> finished.set(false))
+                        stringFlux -> stringFlux.doFinally(signal -> finished.set(true))
                 );
         StepVerifier.create(letters).expectNextCount(3).verifyComplete();
         Assertions.assertTrue(finished.get(), "the finished Boolean must be true.");
@@ -98,8 +98,8 @@ class ClassTest {
                                              .doOnNext(number -> numbers.incrementAndGet());
         Flux<Integer> thisBeforeThat =  numbersPublisher.thenMany(numbersPublisher);
         StepVerifier.create(thisBeforeThat).expectNext(1, 2, 3).verifyComplete();
-        Assertions.assertEquals(letters.get(), 3);
-        Assertions.assertEquals(numbers.get(), 3);
+        Assertions.assertEquals(letters.get(), 0);
+        Assertions.assertEquals(numbers.get(), 6);
     }
 
     @Test
